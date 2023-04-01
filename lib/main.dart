@@ -6,9 +6,10 @@ import 'package:flutter_firebase_bloc/service/post_repository.dart';
 import 'package:flutter_firebase_bloc/view/home.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -23,10 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RepositoryProvider(
-        create: (_) => PostApiRepository(),
-        child:  PostDataPage(),
-      ),
+      home: const HomePage()
     );
   }
 }

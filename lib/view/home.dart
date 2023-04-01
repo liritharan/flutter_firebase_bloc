@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_bloc/post_data/bloc.dart';
+import 'package:flutter_firebase_bloc/retrive_data/bloc.dart';
 import 'package:flutter_firebase_bloc/view/post_data.dart';
 
+import '../post_data/view.dart';
+import '../retrive_data/view.dart';
+import '../service/get_repository.dart';
 import '../service/post_repository.dart';
 
 class HomePage extends StatelessWidget {
@@ -34,14 +38,19 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) =>
-                        isCreate ? BlocProvider(
-                          create: (context) => PostDataBloc(postAPI: PostApiRepository()),
-                          child: RepositoryProvider(
-                              create: (_) => PostApiRepository(),
-                              child: const PostData()),
-                        )
-                            : const PostData()));
+                        builder: (_) => isCreate
+                            ? RepositoryProvider(
+                                create: (_) => PostApiRepository(),
+                                child: PostDataPage(),
+                              )
+                            : BlocProvider(
+                                create: (context) =>
+                                    RetriveDataBloc(getApi: GetApiRepository()),
+                                child: RepositoryProvider(
+                                  create: (_) => GetApiRepository(),
+                                  child: CovidPage(),
+                                ),
+                              )));
               },
               child: isCreate
                   ? const Text('Create Data')

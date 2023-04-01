@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-abstract class Retrive_dataEvent extends Equatable{
-  const Retrive_dataEvent();
+abstract class RetriveDataEvent extends Equatable{
+  const RetriveDataEvent();
 
 @override
 List<Object> get props => [];
 }
-class InitEvent extends Retrive_dataEvent {}
+
+class GetDataEvent extends RetriveDataEvent {}

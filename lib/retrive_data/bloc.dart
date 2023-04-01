@@ -1,14 +1,23 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_firebase_bloc/model/postModel.dart';
+import 'package:flutter_firebase_bloc/service/get_repository.dart';
 
 import 'event.dart';
 import 'state.dart';
 
-class Retrive_dataBloc extends Bloc<Retrive_dataEvent, Retrive_dataState> {
-  Retrive_dataBloc() : super(Retrive_dataState().init()) {
-    on<InitEvent>(_init);
+class RetriveDataBloc extends Bloc<RetriveDataEvent, RetriveDataState> {
+final GetApiRepository getApi;
+  RetriveDataBloc({required this.getApi}) : super(GetDataLoadingState()) {
+    on<GetDataEvent>(_init);
   }
 
-  void _init(InitEvent event, Emitter<Retrive_dataState> emit) async {
-    emit(state.clone());
+  void _init(GetDataEvent event, Emitter<RetriveDataState> emit) async {
+    emit(GetDataLoadingState());
+    try {
+      final data = await getApi.getData();
+      emit(GetDataLoadedState(data));
+    } catch (e) {
+      emit(GetDataErrorState(e.toString()));
+    }
   }
 }
