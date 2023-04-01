@@ -1,0 +1,23 @@
+import 'package:equatable/equatable.dart';
+
+abstract class PostDataEvent extends Equatable{
+  const PostDataEvent();
+  @override
+  List<Object?> get props => [];
+}
+
+class InitEvent extends PostDataEvent {
+
+}
+class PostEvent extends PostDataEvent {
+ final String? problemTitle;
+ final String? problemDecription;
+ final  String? problemLocation;
+ final  String? date;
+
+  const PostEvent(
+      {this.problemTitle,
+        this.problemDecription,
+        this.problemLocation,
+        this.date});
+}
