@@ -14,10 +14,12 @@ class PostDataBloc extends Bloc<PostDataEvent, PostDataState> {
       emit(PostLoading());
       await postAPI.addData(
           event.problemTitle.toString(),
-          event.problemDecription.toString(),
+          event.problemDescription.toString(),
           event.problemLocation.toString(),
           event.date.toString());
+      emit(const PostSuccess('Your request has been submitted'));
       emit(PostLoaded());
+
     });
   }
 }

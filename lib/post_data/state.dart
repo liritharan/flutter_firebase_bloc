@@ -12,8 +12,22 @@ class PostInitial extends PostDataState {}
 
 class PostLoading extends PostDataState {}
 
-class PostLoaded extends PostDataState {
+class PostLoaded extends PostDataState {}
 
+class PostSuccess extends PostDataState {
+  final String message;
+
+  const PostSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
 
-class PostError extends PostDataState {}
+class PostError extends PostDataState {
+  final String error;
+
+  const PostError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

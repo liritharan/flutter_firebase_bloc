@@ -24,14 +24,14 @@ class _CovidPageState extends State<CovidPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('COVID-19 List')),
-      body: _buildListCovid(),
+      appBar: AppBar(title: const Text('Get Data')),
+      body: _buildWidget(),
     );
   }
 
-  Widget _buildListCovid() {
+  Widget _buildWidget() {
     return Container(
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: BlocProvider(
         create: (_) => _newsBloc,
         child: BlocListener<RetriveDataBloc, RetriveDataState>(
@@ -51,8 +51,8 @@ class _CovidPageState extends State<CovidPage> {
               if (state is GetDataLoadingState) {
                 return _buildLoading();
               } else if (state is GetDataLoadedState) {
-                List<FirebaseModel> data = state.data;
-                return Text(data.length.toString());
+
+                return _buildCard(context,state.data);
               } else if (state is GetDataErrorState) {
                 return Container();
               } else {
@@ -65,18 +65,24 @@ class _CovidPageState extends State<CovidPage> {
     );
   }
 
-  Widget _buildCard(BuildContext context, FirebaseModel model) {
+  Widget _buildCard(BuildContext context, dynamic data) {
+    List<FirebaseModel> getData = data;
     return ListView.builder(
-      itemCount: model.problemTitle!.length,
+      itemCount: getData.length,
       itemBuilder: (context, index) {
         return Container(
-          margin: EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(8.0),
           child: Card(
             child: Container(
-              margin: EdgeInsets.all(8.0),
+              margin: const EdgeInsets.all(8.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Country: ${model.problemTitle}"),
+                  Text("Problem Title: ${getData[index].problemTitle}"),
+                  Text("Problem Description: ${getData[index].problemDescription}"),
+                  Text("Problem Location: ${getData[index].problemLocation}"),
+                  Text("Problem Date: ${getData[index].date}"),
                    ],
               ),
             ),

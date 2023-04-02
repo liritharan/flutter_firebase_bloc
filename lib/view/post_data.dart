@@ -60,7 +60,7 @@ class _PostDataState extends State<PostData> {
                               BlocProvider.of<PostDataBloc>(context).add(
                                   PostEvent(
                                       problemTitle: title.text,
-                                      problemDecription: description.text,
+                                      problemDescription: description.text,
                                       problemLocation: location.text,
                                       date: formattedDate));
                             },
@@ -134,7 +134,7 @@ class _PostDataState extends State<PostData> {
   //   return Center(
   //       child: ElevatedButton(
   //           onPressed: () async {
-  //             BlocProvider.of<PostDataBloc>(context).add(PostEvent(problemTitle:title.text,problemDecription: description.text,problemLocation: location.text,date: ))
+  //             BlocProvider.of<PostDataBloc>(context).add(PostEvent(problemTitle:title.text,problemDescription: description.text,problemLocation: location.text,date: ))
   //           }, child: const Text('Submit')));
   // }
 

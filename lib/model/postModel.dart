@@ -1,18 +1,18 @@
 class FirebaseModel {
   String? problemTitle;
-  String? problemDecription;
+  String? problemDescription;
   String? problemLocation;
   String? date;
 
   FirebaseModel(
       {this.problemTitle,
-        this.problemDecription,
+        this.problemDescription,
         this.problemLocation,
         this.date});
 
   FirebaseModel.fromJson(Map<String, dynamic> json) {
     problemTitle = json['problemTitle'];
-    problemDecription = json['problemDecription'];
+    problemDescription = json['problemDescription'];
     problemLocation = json['problemLocation'];
     date = json['date'];
   }
@@ -20,7 +20,7 @@ class FirebaseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['problemTitle'] = this.problemTitle;
-    data['problemDecription'] = this.problemDecription;
+    data['problemDescription'] = this.problemDescription;
     data['problemLocation'] = this.problemLocation;
     data['date'] = this.date;
     return data;

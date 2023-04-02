@@ -39,9 +39,13 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (_) => isCreate
-                            ? RepositoryProvider(
-                                create: (_) => PostApiRepository(),
-                                child: PostDataPage(),
+                            ? BlocProvider(
+                                create: (context) =>
+                                    PostDataBloc(postAPI: PostApiRepository()),
+                                child: RepositoryProvider(
+                                  create: (_) => PostApiRepository(),
+                                  child: PostDataPage(),
+                                ),
                               )
                             : BlocProvider(
                                 create: (context) =>
