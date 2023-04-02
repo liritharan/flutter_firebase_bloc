@@ -3,7 +3,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_bloc/service/post_repository.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 
 import 'bloc.dart';
 import 'event.dart';
@@ -18,19 +20,20 @@ class PostDataPage extends StatefulWidget {
 
 class _PostDataPageState extends State<PostDataPage> {
   final PostDataBloc bloc = PostDataBloc(postAPI: PostApiRepository());
+
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('user');
 
   final TextEditingController title = TextEditingController();
 
   final TextEditingController description = TextEditingController();
-
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   final TextEditingController location = TextEditingController();
 
-  @override
   void initState() {
-    // bloc.add(const PostEvent());
     super.initState();
+    tz.initializeTimeZones();
   }
 
   @override
@@ -65,8 +68,7 @@ class _PostDataPageState extends State<PostDataPage> {
                     ),
                   );
                   print(state.error);
-                }
-                else  if (state is PostSuccess) {
+                } else if (state is PostSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),
@@ -77,8 +79,8 @@ class _PostDataPageState extends State<PostDataPage> {
               },
               child: BlocBuilder<PostDataBloc, PostDataState>(
                 builder: (context, state) {
-                  if(state is PostInitial){
-                    return    SingleChildScrollView(
+                  if (state is PostInitial) {
+                    return SingleChildScrollView(
                       child: Column(
                         children: [
                           textField('Problem Title', title),
@@ -91,7 +93,8 @@ class _PostDataPageState extends State<PostDataPage> {
                                     BlocProvider.of<PostDataBloc>(context).add(
                                         PostEvent(
                                             problemTitle: title.text,
-                                            problemDescription: description.text,
+                                            problemDescription:
+                                                description.text,
                                             problemLocation: location.text,
                                             date: formattedDate));
                                   },
@@ -100,35 +103,34 @@ class _PostDataPageState extends State<PostDataPage> {
                       ),
                     );
                   }
-                if(state is PostLoading){
-                  return _buildLoading();
-                }
-                else if(state is PostLoaded){
-                  return    SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        textField('Problem Title', title),
-                        textField('Problem Description', description),
-                        textField('Problem Location', location),
-                        showDate(formattedDate),
-                        Center(
-                            child: ElevatedButton(
-                                onPressed: () async {
-                                  BlocProvider.of<PostDataBloc>(context).add(
-                                      PostEvent(
-                                          problemTitle: title.text,
-                                          problemDescription: description.text,
-                                          problemLocation: location.text,
-                                          date: formattedDate));
-                                },
-                                child: const Text('Submit')))
-                      ],
-                    ),
-                  );
-                }
-                else{
-                  return Container();
-                }
+                  if (state is PostLoading) {
+                    return _buildLoading();
+                  } else if (state is PostLoaded) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          textField('Problem Title', title),
+                          textField('Problem Description', description),
+                          textField('Problem Location', location),
+                          showDate(formattedDate),
+                          Center(
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    BlocProvider.of<PostDataBloc>(context).add(
+                                        PostEvent(
+                                            problemTitle: title.text,
+                                            problemDescription:
+                                                description.text,
+                                            problemLocation: location.text,
+                                            date: formattedDate));
+                                  },
+                                  child: const Text('Submit')))
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             ),
