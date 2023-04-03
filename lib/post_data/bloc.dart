@@ -19,8 +19,9 @@ class PostDataBloc extends Bloc<PostDataEvent, PostDataState> {
           event.problemLocation.toString(),
           event.date.toString());
       emit(const PostSuccess('Your request has been submitted'));
-      emit(PostLoaded());
       NotificationService().scheduleNotification(0, event.problemTitle.toString(), event.problemDescription.toString(), );
+      emit(PostLoaded());
+
     });
   }
 }

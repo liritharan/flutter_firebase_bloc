@@ -52,13 +52,13 @@ class HomePage extends StatelessWidget {
                                     RetriveDataBloc(getApi: GetApiRepository()),
                                 child: RepositoryProvider(
                                   create: (_) => GetApiRepository(),
-                                  child: CovidPage(),
+                                  child: GetList(),
                                 ),
                               )));
               },
               child: isCreate
-                  ? const Text('Create Data')
-                  : const Text('Get Data'))),
+                  ? const Text('Create Ticket')
+                  : const Text('Get Ticket'))),
     );
   }
 }

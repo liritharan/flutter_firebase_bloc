@@ -7,13 +7,13 @@ import 'bloc.dart';
 import 'event.dart';
 import 'state.dart';
 
-class CovidPage extends StatefulWidget {
+class GetList extends StatefulWidget {
   @override
-  _CovidPageState createState() => _CovidPageState();
+  _GetListState createState() => _GetListState();
 }
 
-class _CovidPageState extends State<CovidPage> {
-  final RetriveDataBloc _newsBloc = RetriveDataBloc( getApi: GetApiRepository());
+class _GetListState extends State<GetList> {
+  final RetriveDataBloc _newsBloc = RetriveDataBloc(getApi: GetApiRepository());
 
   @override
   void initState() {
@@ -44,15 +44,13 @@ class _CovidPageState extends State<CovidPage> {
               );
               print(state.error);
             }
-
           },
           child: BlocBuilder<RetriveDataBloc, RetriveDataState>(
             builder: (context, state) {
               if (state is GetDataLoadingState) {
                 return _buildLoading();
               } else if (state is GetDataLoadedState) {
-
-                return _buildCard(context,state.data);
+                return _buildCard(context, state.data);
               } else if (state is GetDataErrorState) {
                 return Container();
               } else {
@@ -80,10 +78,11 @@ class _CovidPageState extends State<CovidPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text("Problem Title: ${getData[index].problemTitle}"),
-                  Text("Problem Description: ${getData[index].problemDescription}"),
+                  Text(
+                      "Problem Description: ${getData[index].problemDescription}"),
                   Text("Problem Location: ${getData[index].problemLocation}"),
                   Text("Problem Date: ${getData[index].date}"),
-                   ],
+                ],
               ),
             ),
           ),

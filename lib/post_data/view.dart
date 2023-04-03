@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
+import '../service/notification_service.dart';
 import 'bloc.dart';
 import 'event.dart';
 import 'state.dart';
@@ -87,6 +88,7 @@ class _PostDataPageState extends State<PostDataPage> {
                           textField('Problem Description', description),
                           textField('Problem Location', location),
                           showDate(formattedDate),
+                          attachment(),
                           Center(
                               child: ElevatedButton(
                                   onPressed: () async {
@@ -116,6 +118,7 @@ class _PostDataPageState extends State<PostDataPage> {
                           Center(
                               child: ElevatedButton(
                                   onPressed: () async {
+
                                     BlocProvider.of<PostDataBloc>(context).add(
                                         PostEvent(
                                             problemTitle: title.text,
@@ -193,6 +196,11 @@ class _PostDataPageState extends State<PostDataPage> {
     );
   }
 
+  Widget attachmentFile(){
+    return Row(children: [
+      Text(''),
+    ],);
+  }
   // Widget submitButton(BuildContext context) {
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
